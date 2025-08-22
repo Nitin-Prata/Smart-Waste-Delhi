@@ -1,0 +1,26 @@
+# Node
+node_modules/
+**/node_modules/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environments
+.env
+.venv/
+venv/
+ENV/
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
+

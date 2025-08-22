@@ -1,0 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+.App {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mapbox GL styles */
+.mapboxgl-map {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Loading animation */
+.loading-spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Status indicators */
+.status-good {
+  background-color: #10b981;
+  color: white;
+}
+
+.status-moderate {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.status-unhealthy {
+  background-color: #ef4444;
+  color: white;
+}
+
+.status-hazardous {
+  background-color: #7c3aed;
+  color: white;
+}
+
+/* AQI color coding */
+.aqi-good {
+  background-color: #10b981;
+  color: white;
+}
+
+.aqi-moderate {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.aqi-unhealthy-sensitive {
+  background-color: #f97316;
+  color: white;
+}
+
+.aqi-unhealthy {
+  background-color: #ef4444;
+  color: white;
+}
+
+.aqi-very-unhealthy {
+  background-color: #8b5cf6;
+  color: white;
+}
+
+.aqi-hazardous {
+  background-color: #7c2d12;
+  color: white;
+}
+
+/* Waste bin fill levels */
+.fill-empty {
+  background-color: #10b981;
+}
+
+.fill-low {
+  background-color: #f59e0b;
+}
+
+.fill-medium {
+  background-color: #f97316;
+}
+
+.fill-high {
+  background-color: #ef4444;
+}
+
+.fill-full {
+  background-color: #7c2d12;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -100%;
+    transition: left 0.3s ease;
+  }
+  
+  .sidebar.open {
+    left: 0;
+  }
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Custom button styles */
+.btn-primary {
+  @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+.btn-success {
+  @apply bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+.btn-danger {
+  @apply bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+/* Chart container styles */
+.chart-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+/* Map container styles */
+.map-container {
+  height: 500px;
+  width: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Dashboard grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Stats card */
+.stats-card {
+  @apply bg-white rounded-lg shadow-md p-6 border border-gray-200;
+}
+
+.stats-card-header {
+  @apply flex items-center justify-between mb-4;
+}
+
+.stats-card-title {
+  @apply text-lg font-semibold text-gray-900;
+}
+
+.stats-card-value {
+  @apply text-3xl font-bold text-gray-900;
+}
+
+.stats-card-change {
+  @apply text-sm font-medium;
+}
+
+.stats-card-change.positive {
+  @apply text-green-600;
+}
+
+.stats-card-change.negative {
+  @apply text-red-600;
+}
+
+/* Alert styles */
+.alert {
+  @apply p-4 rounded-lg border-l-4 mb-4;
+}
+
+.alert-info {
+  @apply bg-blue-50 border-blue-400 text-blue-700;
+}
+
+.alert-warning {
+  @apply bg-yellow-50 border-yellow-400 text-yellow-700;
+}
+
+.alert-error {
+  @apply bg-red-50 border-red-400 text-red-700;
+}
+
+.alert-success {
+  @apply bg-green-50 border-green-400 text-green-700;
+} 
