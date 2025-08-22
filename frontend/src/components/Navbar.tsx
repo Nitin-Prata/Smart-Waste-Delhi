@@ -1,105 +1,94 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Menu, X, Bell, Settings, User, ChevronDown } from 'lucide-react';
 
-const Navbar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+interface NavbarProps {
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ sidebarOpen, setSidebarOpen }) => {
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [notifications, setNotifications] = useState(3);
+  
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">🌱</span>
-                </div>
-              </div>
-              <div className="ml-3">
-                <h1 className="text-xl font-bold text-gray-900">Smart Delhi</h1>
-                <p className="text-xs text-gray-500">Waste & Air Quality Management</p>
-              </div>
-            </Link>
+    <header className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-200/50 shadow-lg">
+      <div className="flex items-center justify-between px-6 py-4">
+        {/* Left Section */}
+        <div className="flex items-center space-x-4">
+          <button
+            className="lg:hidden p-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+          
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-lg flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-lg">🌱</span>
+            </div>
+            <div>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
+                Smart Delhi
+              </h1>
+              <p className="text-xs text-gray-500 font-medium">
+                AI-Powered City Management
+              </p>
+            </div>
           </div>
+        </div>
 
-          <div className="flex items-center space-x-4">
-            {/* Status Indicator */}
-            <div className="hidden md:flex items-center space-x-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-sm text-gray-600">System Online</span>
+        {/* Center Section - Time & Status */}
+        <div className="hidden md:flex items-center space-x-6">
+          <div className="flex items-center space-x-2 bg-emerald-100 px-3 py-2 rounded-full">
+            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+            <span className="text-emerald-700 font-semibold text-sm">System Online</span>
+          </div>
+          
+          <div className="text-gray-600 font-medium">
+            {currentTime.toLocaleTimeString('en-US', {
+              hour: '2-digit',
+              minute: '2-digit',
+              timeZone: 'Asia/Kolkata'
+            })} IST
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="flex items-center space-x-4">
+          {/* Notifications */}
+          <button className="relative p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all duration-200">
+            <Bell className="w-5 h-5 text-gray-700" />
+            {notifications > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                {notifications}
+              </span>
+            )}
+          </button>
+
+          {/* Settings */}
+          <button className="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all duration-200">
+            <Settings className="w-5 h-5 text-gray-700" />
+          </button>
+
+          {/* User Profile */}
+          <div className="flex items-center space-x-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full shadow-lg">
+            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+              <User className="w-4 h-4" />
             </div>
-
-            {/* Notifications */}
-            <button className="p-2 text-gray-400 hover:text-gray-600 relative">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-              </svg>
-              <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400"></span>
-            </button>
-
-            {/* User Menu */}
-            <div className="relative">
-              <button className="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
-                <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                  <span className="text-sm font-medium text-gray-700">A</span>
-                </div>
-                <span className="hidden md:block text-sm font-medium">Admin</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
+            <div className="hidden sm:block">
+              <p className="text-sm font-semibold">Admin</p>
+              <p className="text-xs opacity-90">Delhi Municipal</p>
             </div>
-
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden p-2 text-gray-400 hover:text-gray-600"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+            <ChevronDown className="w-4 h-4" />
           </div>
         </div>
       </div>
-
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
-            <Link
-              to="/dashboard"
-              className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/air-quality"
-              className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Air Quality
-            </Link>
-            <Link
-              to="/waste-management"
-              className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Waste Management
-            </Link>
-            <Link
-              to="/map"
-              className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Map
-            </Link>
-          </div>
-        </div>
-      )}
-    </nav>
+    </header>
   );
 };
 
